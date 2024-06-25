@@ -1,5 +1,7 @@
 <?php
 
+	// Code to add new patrons to the library
+
 	include '../connect/connect_to_db.php';
 	
 	$db_name = 'test_db';
