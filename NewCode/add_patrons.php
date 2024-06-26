@@ -1,6 +1,8 @@
 <?php
 
-	// Code to add new patrons to the library
+	/* 
+ 		Code to add new patrons to the library
+	*/
 
 	include '../connect/connect_to_db.php';
 	
@@ -9,8 +11,8 @@
 	$conn = get_db_connection($db_name);
 	
 	// sql to create table
-	$sql = "INSERT INTO MyGuests (firstname, lastname, email)
-	VALUES ('John', 'Doe', 'john@example.com')";
+	$sql = "INSERT INTO patrons (patronid, fname, lname, date_of_birth, address, fees, loaned_books)
+	VALUES (  )";
 	
 	try {
 	    $conn->query($sql);
