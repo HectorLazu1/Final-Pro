@@ -1,34 +1,34 @@
 <html>
 <body>
 
-    <span style="border: 5px solid black">
+    <div style="border: 5px solid black; padding: 10px">
         <form action="add_patrons.php" method="post">
         	
-        	<span style = 'position:fixed; left: 30%;; top: 30%;'> 
-        		First Name: <input type="text" name="fname">
+        	<span> 
+        		First Name: <input type="text" name="fname" style="margin: 8px 2px">
         		<br>
         	</span>
         	
-        	<span style = 'position:fixed; left: 30%;; top: 40%;'> 
-        		Last Name: <input type="text" name="lname">
+        	<span> 
+        		Last Name: <input type="text" name="lname" style="margin: 8px 2px">
                 <br>
         	</span>
         	
-        	<span style = 'position:fixed; left: 30%;; top: 50%;'> 
-        		Address: <input type="text" name="address">
+        	<span> 
+        		Address: <input type="text" name="address" style="margin: 8px 2px">
                 <br>
         	</span>
     
-            <span style = 'position:fixed; left: 30%;; top: 60%;'> 
-        		Date of Birth: <input type="text" name="dob">
+            <span> 
+        		Date of Birth: <input type="text" name="dob" style="margin: 8px 2px">
                 <br>
         	</span>
         	
-        	<span style = 'position:fixed; left: 30%;; top: 70%;'> 
-        		<input type="submit">
+        	<span> 
+        		<input type="submit" style="margin: 8px 2px">
         	</span>
         </form>
-    </span>
+    </div>
 
 </body>
 </html>
