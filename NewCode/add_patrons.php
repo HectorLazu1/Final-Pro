@@ -10,15 +10,16 @@
 	
 	$conn = get_db_connection($db_name);
 	
-	/*
-		=======================
-  		Must still think of a way to give each new patron a unique ID number
-    		=======================
-	*/
-	
+	// Generate random ID for new patrons:
+	while ($i=0){
+		$new_id = rand(0, 100); // Generate random number
+		if in_array($new_id, $conn->query("SELECT patron_id FROM patrons")) continue; // If the number is already in use as a patronID, then find a different number for the new ID
+		else break; // If the number is NOT already in use as a patron ID, then continue with the program
+	}
+
 	// Insert new values into the table:
 	$sql = "INSERT INTO patrons (patronid, fname, lname, date_of_birth, address, fees, loaned_books)
-	VALUES ($_POST["fname"], $_POST["lname"], $_POST["dob"], $_POST["address"], 0.0, 0)";
+	VALUES ($new_id, $_POST["fname"], $_POST["lname"], $_POST["dob"], $_POST["address"], 0.0, 0)";
 	
 	try {
 	    $conn->query($sql);
