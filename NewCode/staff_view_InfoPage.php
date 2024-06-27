@@ -38,7 +38,7 @@
     </div>
     
     <div style="border: 5px solid black; padding: 10px; margin: 10px 0px">
-        <form action="staff_add_book.php" method="post">
+        <form action="staff_add_catalog_book.php" method="post">
 
           <h2>Add books to catalog</h2>
         	<span> 
