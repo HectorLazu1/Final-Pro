@@ -24,7 +24,7 @@
 	try {
 	    $conn->query($sql);
 	    $last_id = $conn->insert_id;
-	    echo "Data inserted into MyGuests successfully";
+	    echo "New patron recorded successfully";
 		echo "<br>";
 		echo "New record created successfully. Last inserted ID is: " . $last_id;
 	} catch (Exception $e) {
