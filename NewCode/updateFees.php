@@ -1,47 +1,36 @@
 <?php
 
-// Establish connection with the database:
-include '../../connect/connect_to_db.php';
-$db_name = 'library_try';	
-$conn = get_db_connection($db_name);
+    // Establish connection with the database:
+    include '../connect/connect_to_db.php';
+	  $db_name = 'test_db';	
+    $conn = get_db_connection($db_name);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Display the appropriate data in response to the textfield input:
-if ($_POST["infoType"] == "loans") {
-    $stmt = $conn->prepare("SELECT * FROM checkouts");
+    // When using this script, the patronID of the patron requesting this service should be sent in using POST
+    $patronid = $_POST["patronid"];
+    // Retrieve the current fines that the patron owes
+    $stmt = $conn->prepare("SELECT Late_Fees_Owed FROM Patrons WHERE Patron_Id=?");
+    $stmt->bind_param("i", $patronid);
     $stmt->execute();
-    $result = $stmt->get_result();
-	// Output the results
-	if ($result->num_rows > 0) {
-		while ($row = $result->fetch_assoc()) {
-			echo "ID: " . $row["PatronID"] . " - Book: " . $row["ISBN"] ." - Checkout Date: ". $row["Checkout_Date"] . " - Renewals Left: " . $row["Renewals_Left"] . "<br>";
-		}
-	} else {
-		echo "No records found.";
-	}
-} elseif ($_POST["infoType"] == "holds") {
-    $stmt = $conn->prepare("SELECT * FROM holds");
+    $current_fines = $stmt->get_result();
+    
+    
+    // Retrieve all CHECK OUT DATES (from which due dates are derived) for all books in 'checked_out' where the due date is smaller than the current date:
+    $stmt = $conn->prepare("SELECT Checked_Out FROM Books WHERE ISBN=(SELECT ISBN FROM Checkouts WHERE Patron_Id=? AND ( Checkout_Date + 30 < CURRENT_DATE() )");
+    $stmt->bind_param("i", $patronid);
     $stmt->execute();
-    $result = $stmt->get_result();
-	// Output the results
-		if ($result->num_rows > 0) {
-			while ($row = $result->fetch_assoc()) {
-				echo "ID: " . $row["PatronID"] . " - Book: " . $row["ISBN"] . "<br>";
+    $late_book_dates = $stmt->get_result();
+    
+    // Add up all the owed late fees
+    $added_fees = 0.0
+    foreach ($late_book_dates as $time) {
+        $late_period = strtotime("now") - (strtotime($time) + strtotime(30));
+        $added_fees = $added_fees + ($late_period * 0.5);
     }
-		} else {
-			echo "No records found.";
-	}
-} else {
-    echo "Invalid infoType.";
+
+    $stmt  = $conn->prepare("UPDATE Patrons SET Owed_Late_Fees = (Patrons.Owed_Late_Fees + ?)");
+    $stmt->bind_param("i", $added_fees);\
+    $stmt->execute();
+    
+    
     $conn->close();
-    exit();
-}
-
-
-$stmt->close();
-$conn->close();
 ?>
