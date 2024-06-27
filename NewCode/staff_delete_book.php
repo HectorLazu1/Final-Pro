@@ -1,7 +1,7 @@
 <?php
 	// Establish connection with the database:
 	include '../connect/connect_to_db.php';
-	$db_name = 'test_db';	
+	$db_name = 'library_try';	
 	$conn = get_db_connection($db_name);
 
 	$stmt = $conn->prepare("DELETE FROM Books WHERE ISBN = ?");

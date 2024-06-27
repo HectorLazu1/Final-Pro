@@ -6,7 +6,7 @@
 
 	include '../connect/connect_to_db.php';
 	
-	$db_name = 'test_db';
+	$db_name = 'library_try';
 	
 	$conn = get_db_connection($db_name);
 	
@@ -15,12 +15,12 @@
 		$new_id = rand(0, 100); // Generate random number
 		
 		// Check if the generated ID number is already in use:
-		$stmt = $conn->prepare("SELECT EXISTS (SELECT * FROM Patrons WHERE PatronID=?)");
+		$stmt = $conn->prepare("SELECT * FROM Patrons WHERE PatronID=?");
 	    $stmt->bind_param("i", $new_id);
 	    $stmt->execute();
-		$exists_bool = $stmt->get_result();
+		$result = $stmt->get_result();
 	
-		if ($exists_bool == 0){
+		if ($result->num_rows != 0){
 			break;  // If the generated ID number is NOT already in use, then use this number as the new patron's ID
 		} else{
 			continue; // If the number IS already in use, generate a new number
@@ -28,8 +28,7 @@
 	}
 
 	// Insert new values into the table:
-	$sql = "INSERT INTO patrons (patronid, fname, lname, date_of_birth, address, fees, loaned_books)
-	VALUES ($new_id, $_POST["fname"], $_POST["lname"], $_POST["dob"], $_POST["address"], 0.0, 0)";
+	$sql = "INSERT INTO patrons (patronid, fname, lname, date_of_birth, address, fees, loaned_books) VALUES ($new_id, $_POST['fname'], $_POST['lname'], $_POST['dob'], $_POST['address'], 0.0, 0)";
 	
 	try {
 	    $conn->query($sql);

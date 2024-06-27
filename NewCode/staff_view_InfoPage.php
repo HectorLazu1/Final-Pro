@@ -83,7 +83,7 @@
     </div>
     
     <div style="border: 5px solid black; padding: 10px; margin: 10px 0px">
-        <form action="staff_delete_book.php" method="post">
+        <form action="deleting_book.php" method="post">
 
           <h2>Remove books from catalog</h2>
         	<span> 
