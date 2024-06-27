@@ -1,7 +1,7 @@
 <html>
 <body>
 
-    <div style="border: 5px solid black; padding: 10px">
+    <div style="border: 5px solid black; padding: 10px; margin: 10px 0px">
         <form action="staff_show_book_info.php" method="post">
 
           <h2>Enter type of info desired ("loans" or "holds").</h2>
