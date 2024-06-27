@@ -13,8 +13,18 @@
 	// Generate random ID for new patrons:
 	while ($i=0){
 		$new_id = rand(0, 100); // Generate random number
-		if in_array($new_id, $conn->query("SELECT patron_id FROM patrons")) continue; // If the number is already in use as a patronID, then find a different number for the new ID
-		else break; // If the number is NOT already in use as a patron ID, then continue with the program
+		
+		// Check if the generated ID number is already in use:
+		$stmt = $conn->prepare("SELECT EXISTS (SELECT * FROM Patrons WHERE PatronID=?)");
+	    $stmt->bind_param("i", $new_id);
+	    $stmt->execute();
+		$exists_bool = $stmt->get_result();
+	
+		if ($exists_bool == 0){
+			break;  // If the generated ID number is NOT already in use, then use this number as the new patron's ID
+		} else{
+			continue; // If the number IS already in use, generate a new number
+		}
 	}
 
 	// Insert new values into the table:
