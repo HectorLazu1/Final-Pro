@@ -14,7 +14,7 @@
 		$stmt = $conn->prepare("INSERT INTO Holds (ISBN, PatronID) VALUES (?, ?)");
 		$stmt->bind_param("ii", $_POST["ISBN"], $_POST["id"]);
 	} else{
-		echo "Unable to place hold; This book is already on hold for another patron."
+		echo "Unable to place hold; This book is already on hold for another patron.";
 	}
 	
 	$conn->close();
